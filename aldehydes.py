@@ -1,7 +1,7 @@
 # Run me w $ python aldehydes.py
 from selenium import webdriver
 import os
-import urllib
+import urllib.request
 import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,7 +13,7 @@ wiki = 'https://en.m.wikipedia.org/wiki/Category%3AAldehydes'
 
 driver = webdriver.Firefox()
 wait = WebDriverWait(driver, 10)
-directory = 'aldehyde_images'
+directory = '/aldehyde_images'
 
 def scrape(url):
 	try:
@@ -31,16 +31,12 @@ def scrape(url):
 		img = driver.find_element(By.CLASS_NAME, 'thumbimage')
 		name = img.text
 		filename = '/something.png'
-		print(filename)
 		imgurl = img.get_attribute('src')
 		driver.get(imgurl)
 		wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'transparent')))
-		thing = os.path.join(os.path.dirname(os.path.realpath(__file__)), directory, filename)
-		print (thing)
-		driver.save_screenshot(os.path.join(os.path.dirname(os.path.realpath(__file__)), directory, filename))
-		# driver.save_screenshot(imgurl, filename)
-		# urllib.urlretrieve(img, img.text)
-		# print(src)
+		imagefile = os.getcwd() + directory + filename
+		print(imagefile)
+		urllib.request.urlretrieve(imgurl, imagefile)
 	finally:
 		driver.close
 		driver.quit
