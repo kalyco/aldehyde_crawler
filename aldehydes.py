@@ -25,7 +25,6 @@ def setUp():
 
 def scrape():
 	driver = setUp()
-	wait = WebDriverWait(driver, 100)
 	page = driver.find_element(By.ID, 'mw-pages')
 	categories = page.find_elements(By.CLASS_NAME, 'mw-category-group')
 	main_window = driver.current_window_handle
